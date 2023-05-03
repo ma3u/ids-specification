@@ -1,0 +1,20 @@
+@startuml
+!pragma layout smetana
+!include ../common/style/diagram.styles.puml
+
+title Simple Compute2Data sceanrio
+
+AppProvider -> DataspaceAuthority: register as participent (self description)
+AppProvider -> AppProvider: provide algorithm in Federated Catalog
+
+AppConsumer -> DataspaceAuthority: register as participent (self description)
+AppProvider <- AppConsumer : get meta data with environment requirements
+AppProvider <-> AppConsumer : contract negotiation (check policies)
+
+AppConsumer -> AppProvider : transfer app  
+AppConsumer -> AppConsumer : config and and deploy app environment 
+AppConsumer -> AppConsumer : run app  
+AppConsumer -> AppConsumer : write results in cloud storage  
+
+@enduml
+

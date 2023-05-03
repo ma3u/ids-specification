@@ -1,0 +1,34 @@
+@startuml
+!pragma layout smetana
+!include ../common/style/diagram.styles.puml
+
+title  Confidential Compute in EDC
+
+AppProvider -> DataspaceAuthority: Register as participent (self description)
+AppProvider -> AppProvider: Provide algorithm in Federated Catalog
+
+' TEEProvider -> DataspaceAuthority: Register as participent (self description)
+' TEEProvider -> TEEProvider: Provide infrastructure in Federated Catalog
+
+DataProvider -> DataspaceAuthority: register as participent (self description)
+DataProvider -> DataProvider: provide meta data in Federated Catalog
+
+XConsumer -> DataspaceAuthority: register as participent (self description)
+
+AppProvider <- XConsumer : get meta data with environment requirements
+AppProvider <-> XConsumer : contract negotiation  
+AppProvider -> XConsumer : transfer container image
+
+DataProvider <- XConsumer : get meta data 
+DataProvider <-> XConsumer : contract negotiation  
+
+XConsumer -> XConsumer : configure and deploy TEE Environment 
+XConsumer [#grey]-> ClearingHouse: run code attestation for app
+ClearingHouse <- DataProvider: get result of Code attestation 
+note right: (optional)
+DataProvider -> XConsumer : transfer data via Push after positive attestation
+' DataProvider -> XConsumer : provide key to TEE environment (Key Handling)
+' note right: (need to be discussed)
+XConsumer -> XConsumer : run App  
+@enduml
+
